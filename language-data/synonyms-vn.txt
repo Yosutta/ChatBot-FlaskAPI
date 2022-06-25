@@ -1,68 +1,68 @@
 {
-    "lời chào": {
-        "xin chào",
-        "chào",
-        "xin chao",
-        "chao",
-        "hello",
-        "hi",
-        "konichiwa",
-        "konbanwa",
+    'lời chào': {
+        'xin chào',
+        'chào',
+        'xin chao',
+        'chao',
+        'hello',
+        'hi',
+        'konichiwa',
+        'konbanwa',
     },
-    "hỏi thăm":{
-        "khoẻ không",
-        "khoe khong",
-        "how are you",
-        "how do you do"
+    'hỏi thăm':{
+        'khoẻ không',
+        'khoe khong',
+        'how are you',
+        'how do you do'
     },
-    "thời gian làm việc":{
-        "thời gian làm việc",
-        "giờ làm việc",
-        "thoi gian lam viec",
-        "gio lam viec"
+    'thời gian làm việc':{
+        'thời gian làm việc',
+        'giờ làm việc',
+        'thoi gian lam viec',
+        'gio lam viec'
     },
-    "danh mục":{
-        "danh mục",
-        "hàng",
-        "danh muc",
-        "hang"
+    'danh mục':{
+        'danh mục',
+        'hàng',
+        'danh muc',
+        'hang'
     },
-    "sản phẩm - lều":{
-        "lều",
-        "lều trại",
-        "leu",
-        "leu trai"
+    'sản phẩm - lều':{
+        'lều',
+        'lều trại',
+        'leu',
+        'leu trai'
     },
-    "từ biệt": {
-        "chào tạm biệt",
-        "tạm biệt",
-        "hẹn gặp lại",
-        "chao tam biet",
-        "tam biet",
-        "hen gap lai",
-        "bye",
-        "goodbye",
+    'từ biệt': {
+        'chào tạm biệt',
+        'tạm biệt',
+        'hẹn gặp lại',
+        'chao tam biet',
+        'tam biet',
+        'hen gap lai',
+        'bye',
+        'goodbye',
     },
-    "giá tiền": {
-        "giá",
-        "giá tiền",
-        "tiền",
-        "gia",
-        "gia tien",
-        "tien"
+    'giá tiền': {
+        'giá',
+        'giá tiền',
+        'tiền',
+        'gia',
+        'gia tien',
+        'tien'
     },
-    "câu hỏi - bao nhiêu 1": {
-        "nhiêu",
-        "bao nhiêu",
-        "nhieu",
-        "bao nhieu",
-        "how much"
+    'câu hỏi - bao nhiêu 1': {
+        'nhiêu',
+        'bao nhiêu',
+        'nhieu',
+        'bao nhieu',
+        'how much'
     },
-    "câu hỏi - bao nhiêu 2": {
-        "còn mấy",
-        "mấy",
-        "con may",
-        "may",
-        "how many"
+    'câu hỏi - bao nhiêu 2': {
+        'còn mấy',
+        'mấy',
+        'con may',
+        'may',
+        'how many'
     }
 }

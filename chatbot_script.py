@@ -1,6 +1,6 @@
 import re
 
-from processed_data import responses, keywords_dict
+from process_data import responses, keywords_dict
 
 
 def createAnswer(message):
@@ -14,6 +14,7 @@ def createAnswer(message):
     for intent, pattern in keywords_dict.items():
         if re.search(pattern, user_input):
             matched_intent = intent
+            print(matched_intent)
 
     key = 'không rõ'
 
