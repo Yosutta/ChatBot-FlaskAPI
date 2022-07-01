@@ -1,4 +1,4 @@
-from lib.mysql_conn import mysqldb
+from lib.mysql_conn import mysqldb, mysqlerror
 
 mysqlcursor = mysqldb.cursor()
 
@@ -11,5 +11,7 @@ class Conversation():
             mysqlcursor.execute(query, value)
             mysqldb.commit()
 
-        except:
-            raise Exception('INTERNAL SERVER ERROR - DATABASE')
+        except mysqlerror as err:
+            print(err)
+            raise Exception(
+                'INTERNAL SERVER ERROR - DATABASE - TABLE CONVERSATION')

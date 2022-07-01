@@ -7,6 +7,8 @@ import mysql.connector
 #     database="chatbot_flask"
 # )
 
+mysqlerror = mysql.connector.Error
+
 mysqldb = mysql.connector.connect(
     host="sql6.freesqldatabase.com",
     user="sql6503307",
@@ -14,3 +16,8 @@ mysqldb = mysql.connector.connect(
     database="sql6503307",
     port="3306"
 )
+
+if (mysqldb.is_connected()):
+    print("Connected")
+else:
+    print("Not connected")
