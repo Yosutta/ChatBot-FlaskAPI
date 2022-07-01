@@ -10,6 +10,6 @@ class Conversation():
             value = (conversation_id, formatted_time)
             mysqlcursor.execute(query, value)
             mysqldb.commit()
-            
+
         except:
-            raise Exception('INTERNAL SERVER ERROR - DATBASE')
+            raise Exception('INTERNAL SERVER ERROR - DATABASE')

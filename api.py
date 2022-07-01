@@ -1,7 +1,10 @@
+from http.client import HTTPException
 from flask import Flask, make_response, request
 from http import HTTPStatus
 import uuid
 from datetime import datetime, timedelta
+import time
+from flask_cors import cross_origin
 
 from chatbot_script import createAnswer
 
@@ -11,10 +14,19 @@ from model.conversation import Conversation as ConversationModel
 app = Flask(__name__)
 
 
+@app.route("/dialogflow", methods=['POST'])
+@cross_origin()
+def afunction():
+    print(request.get_json())
+    resp = make_response('LMAO', HTTPStatus.OK)
+    return resp
+
+
 @app.route("/chatbot", methods=['POST'])
+@cross_origin()
 def createMessage():
     try:
-        conversation_id = request.cookies.get('conversation_id')
+        conversation_id = request.json["conversation_id"]
 
         if not conversation_id:
             conversation_id = str(uuid.uuid4())
@@ -26,22 +38,23 @@ def createMessage():
             message_id = str(uuid.uuid1())
             time_now = datetime.now()
             formatted_time = time_now.strftime('%Y-%m-%d %H:%M:%S')
-            expire_time = time_now + timedelta(minutes=10)
+            d = datetime.now() + timedelta(minutes=10)
+            expire_time = int(time.mktime(d.timetuple())) * 1000
 
             MessageModel.newMessage(
                 message_id, conversation_id, request.json['message'], formatted_time)
             answer = createAnswer(request.json['message'])
 
             resp = make_response({"status": HTTPStatus.OK, "data": {
-                                 'bot_answer': answer, 'conversation_id': conversation_id}}, HTTPStatus.OK)
-            resp.set_cookie('conversation_id', conversation_id,
-                            expires=expire_time)
+                                 'bot_answer': answer, 'conversation_id': conversation_id, "cookie_expire_time": expire_time}}, HTTPStatus.OK)
+
             return resp
         else:
             raise Exception("Missing user input")
 
     except Exception as err:
         error = str(err)
+        print(error)
         resp = make_response(
             {"message": error, "error": "Internal server error"}, HTTPStatus.INTERNAL_SERVER_ERROR)
         return resp

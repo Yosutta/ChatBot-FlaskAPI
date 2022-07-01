@@ -12,4 +12,4 @@ class Message():
             mysqldb.commit()
 
         except:
-            raise Exception('INTERNAL SERVER ERROR - DATBASE')
+            raise Exception('INTERNAL SERVER ERROR - DATABASE')
