@@ -24,3 +24,5 @@ for key, value in keywords.items():
 fn = open('./language-data/responses-vn.txt', 'r', encoding='utf8')
 responses_data = fn.read()
 responses = ast.literal_eval(responses_data)
+
+print("Accessing data")

@@ -24,6 +24,8 @@ def createAnswer(message):
     return responses[key]
 
 
+print("Providing answer")
+
 # while(True):
 
 #     user_input = input(">").lower()
