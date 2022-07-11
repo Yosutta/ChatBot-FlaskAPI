@@ -8,8 +8,8 @@ from flask_cors import cross_origin
 
 from chatbot_script import createAnswer
 
-# from model.message import Message as MessageModel
-# from model.conversation import Conversation as ConversationModel
+from model.message import Message as MessageModel
+from model.conversation import Conversation as ConversationModel
 
 app = Flask(__name__)
 
@@ -24,7 +24,7 @@ def createMessage():
             conversation_id = str(uuid.uuid4())
             time_now = datetime.now()
             formatted_time = time_now.strftime('%Y-%m-%d %H:%M:%S')
-            # ConversationModel.newConversation(conversation_id, formatted_time)
+            ConversationModel.newConversation(conversation_id, formatted_time)
 
         if(request.json['message']):
             message_id = str(uuid.uuid1())
@@ -33,8 +33,8 @@ def createMessage():
             d = datetime.now() + timedelta(minutes=10)
             expire_time = int(time.mktime(d.timetuple())) * 1000
 
-            # MessageModel.newMessage(
-            # message_id, conversation_id, request.json['message'], formatted_time)
+            MessageModel.newMessage(
+                message_id, conversation_id, request.json['message'], formatted_time)
             answer = createAnswer(
                 request.json['message']).replace("\n", "<br />\n")
 

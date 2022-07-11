@@ -1,5 +1,4 @@
-from array import array
-from lib.mysql_products_conn import mysqldb, mysqlerror
+from lib.mysql_conn import mysqldb, mysqlerror
 
 mysqlcursor = mysqldb.cursor()
 
