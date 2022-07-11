@@ -18,7 +18,7 @@ def getProductLink(product_name):
 
 def getProductsIntent(intents):
     filtered_dict = {k: v for (k, v) in intents.items() if 'sản phẩm' in k}
-    print("Filtered dict for products: " + str(filtered_dict))
+    # print("Filtered dict for products: " + str(filtered_dict))
     if(len(filtered_dict) == 0):
         return None
     else:
@@ -31,7 +31,7 @@ def getProductsIntent(intents):
 
 def getCategoriesIntent(intents):
     filtered_dict = {k: v for (k, v) in intents.items() if 'danh mục' in k}
-    print("Filtered dict for categories: " + str(filtered_dict))
+    # print("Filtered dict for categories: " + str(filtered_dict))
     if(len(filtered_dict) == 0):
         return None
     else:
@@ -109,8 +109,6 @@ def getAnswerDirection(intents):
                 match main_intents[1]:
                     case 'giá tiền':
                         # Nếu không tồn tại tên sản phẩm trong câu hỏi
-                        print("Type of câu hỏi intent " +
-                              str(main_intents[1]))
                         if not products_intent:
                             categories_intent = getCategoriesIntent(intents)
                             if len(categories_intent) > 0:
@@ -126,11 +124,8 @@ def getAnswerDirection(intents):
                                 price_answer += intent_answer + '\n'
                             return createDict("answer", price_answer)
                     case 'số tồn kho':
-                        print("Type of câu hỏi intent" +
-                              str(main_intents[1]))
                         if not products_intent:
                             categories_intent = getCategoriesIntent(intents)
-                            print(categories_intent)
                             if len(categories_intent) > 0:
                                 return prepareCategoriesIntentAnswer(categories_intent)
                             else:
@@ -168,7 +163,6 @@ def createAnswer(message):
                 weight = 1
         for pattern in keywords[intent]:
             if(re.search(pattern, user_input)):
-                # print("\nPattern " + str(pattern) + " - Input " + user_input)
                 if intent not in matched_intent:
                     matched_intent[intent] = weight
                 elif intent in matched_intent:
@@ -183,7 +177,6 @@ def createAnswer(message):
         intentSum = sum(matched_intent.values())
         for intent in matched_intent:
             matched_intent[intent] = matched_intent[intent] / intentSum
-        print(matched_intent)
         del intentSum
         answer_direction = getAnswerDirection(matched_intent)
 
