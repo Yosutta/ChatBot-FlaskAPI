@@ -1,0 +1,72 @@
+{
+    'danh mục':{
+        'lều cắm trại':{
+            'lều',
+            'lều trại',
+            'leu',
+            'leu trai',
+            'tent',
+            'camping tent',
+            'outdoor tent'
+        },
+        'bàn ghế cắm trại':{
+            'bàn',
+            'bàn ghế',
+            'bàn cắm trại',
+            'bàn ngoài trời',
+            'bàn dã ngoại',
+            'ban',
+            'ban ghe'
+            'ban cam trai',
+            'ban ngoai troi',
+            'ban da ngoai',
+            'table',
+            'outdoor table',
+            'camping table'
+        },
+        'đèn cắm trại':{
+            'đèn',
+            'đèn cắm trại',
+            'đèn ngoài trời',
+            'đèn dã ngoại',
+            'den',
+            'den cam trai',
+            'den ngoai troi',
+            'den da ngoai',
+            'lantern',
+            'outdoor lantern',
+            'camping lantern'
+        },
+        'thuyền':{
+            'thuyền',
+            'thể thao nước',
+            'thuyen',
+            'the thao nuoc',
+            'stand',
+            'stand up',
+            'paddle',
+            'board',
+            'stand up paddle board',
+            'water sport'
+        },
+        'phụ kiện cắm trại':{
+            'phụ kiện',
+            'tiện nghi',
+            'phu kien',
+            'tien nghi',
+            'accessory',
+            'accessories',
+            'equipment',
+            'equipments',
+        },
+        'camera hành trình':{
+            'máy quay',
+            'hành trình',
+            'máy quay hành trình',
+            'camera',
+            'may quay',
+            'hanh trinh',
+            'may quay hanh trinh'
+        }
+    }
+}
