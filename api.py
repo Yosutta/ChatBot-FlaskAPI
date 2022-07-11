@@ -14,14 +14,6 @@ from model.conversation import Conversation as ConversationModel
 app = Flask(__name__)
 
 
-@app.route("/dialogflow", methods=['POST'])
-@cross_origin()
-def afunction():
-    print(request.get_json())
-    resp = make_response('LMAO', HTTPStatus.OK)
-    return resp
-
-
 @app.route("/chatbot", methods=['POST'])
 @cross_origin()
 def createMessage():
@@ -43,7 +35,8 @@ def createMessage():
 
             MessageModel.newMessage(
                 message_id, conversation_id, request.json['message'], formatted_time)
-            answer = createAnswer(request.json['message'])
+            answer = createAnswer(
+                request.json['message']).replace("\n", "<br />\n")
 
             resp = make_response({"status": HTTPStatus.OK, "data": {
                                  'bot_answer': answer, 'conversation_id': conversation_id, "cookie_expire_time": expire_time}}, HTTPStatus.OK)
