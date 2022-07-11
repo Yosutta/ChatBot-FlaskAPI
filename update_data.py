@@ -20,9 +20,6 @@ query = ''' SELECT ahr00_virtuemart_products.virtuemart_product_id, product_name
 mysqlcursor.execute(query)
 data = mysqlcursor.fetchall()
 
-# for d in data:
-# print(d)
-
 files = ['./language-data/intents/intents-products.txt',
          './language-data/intents/intents-categories.txt',
          './language-data/intents/intents-categories.txt',

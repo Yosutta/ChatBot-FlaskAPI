@@ -18,20 +18,15 @@ def getProductLink(product_name):
 
 def getProductsIntent(intents):
     filtered_dict = {k: v for (k, v) in intents.items() if 'sản phẩm' in k}
-    # print("Filtered dict for products: " + str(filtered_dict))
     if(len(filtered_dict) == 0):
         return None
     else:
         products_intent = list(filtered_dict.keys())
         return products_intent
-        # highest_product_intent = max(filtered_dict, key=filtered_dict.get)
-        # print("Highest product intent: " + str(highest_product_intent))
-        # return highest_product_intent
 
 
 def getCategoriesIntent(intents):
     filtered_dict = {k: v for (k, v) in intents.items() if 'danh mục' in k}
-    # print("Filtered dict for categories: " + str(filtered_dict))
     if(len(filtered_dict) == 0):
         return None
     else:
@@ -47,24 +42,15 @@ def prepareCategoriesIntentAnswer(categories_intent=[]):
 
 
 def prepareProductPriceAnswer(product_intent):
-    # print("Creating product price answer")
-    # print("Product Intent: " + product_intent)
     product_price = getProductPrice(product_intent)
     product_link = getProductLink(product_intent)
     return 'Giá của sản phẩm {} là {}.'.format(product_link, product_price)
 
 
 def prepareProductInventoryAnswer(product_intent):
-    # print("Creating product inventory answer")
-    # print("Product Intent: " + product_intent)
     product_inventory = getProductInventory(product_intent)
     product_link = getProductLink(product_intent)
     return 'Số tồn kho của sản phẩm {} là {}.'.format(product_link, product_inventory)
-
-
-# def prepareCategoriesListAnswer():
-#     categories_list = getCategoriesList()
-#     print(categories_list)
 
 
 def createDict(key, value):
@@ -83,7 +69,6 @@ def getAnswerDirection(intents):
         # Lấy ra các ngữ cảnh có cùng điểm cao nhất
         filtered_dict = {k: v for (k, v) in intents.items()
                          if highest_intent_value == v}
-        print("Filtered highest intent value: " + str(filtered_dict))
 
         main_intent = None
         # Nếu danh sách chỉ có một ngữ cảnh có điểm cao nhất lấy ngữ cảnh đó
@@ -92,8 +77,6 @@ def getAnswerDirection(intents):
         # Nếu danh sách có hơn 2 lấy ngữ cảnh theo sắp xếp thứ tự cuối cùng
         else:
             main_intent = list(filtered_dict.keys())[-1]
-
-        print("Main intent: " + str(main_intent))
 
         main_intents = main_intent.split('.')
 
@@ -148,9 +131,6 @@ def getAnswerDirection(intents):
 def createAnswer(message):
     user_input = message.lower()
 
-    # if user_input in ['thoat', 'quit']:
-    #     print('Tạm biệt và hẹn gặp lại nhé!')
-
     matched_intent = {}
 
     for intent in keywords:
@@ -180,12 +160,6 @@ def createAnswer(message):
         del intentSum
         answer_direction = getAnswerDirection(matched_intent)
 
-        # if answer_direction["answer"]:
-        #     return answer_direction["answer"]
-        # elif answer_direction["key"]:
-        #     key = answer_direction["key"]
-        #     print(key)
-
         match list(answer_direction.keys())[0]:
             case "answer":
                 return answer_direction["answer"]
@@ -197,8 +171,6 @@ def createAnswer(message):
 
     return responses[key]
 
-
-print("Providing answer")
 
 # if câu hỏi:
 # 	Check sản phẩm
