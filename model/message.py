@@ -9,7 +9,6 @@ class Message():
             query = 'INSERT INTO message (message_id, conversation_id, message_text, sent_time) VALUES(%s, %s, %s, %s)'
             value = (message_id, conversation_id, message_text, formatted_time)
             mysqlcursor.execute(query, value)
-            print('lmao')
             mysqldb.commit()
 
         except mysqlerror as err:
