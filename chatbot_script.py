@@ -1,6 +1,6 @@
 import re
 
-from process_data import responses, keywords
+from process_data import responses_keywords, synonym_keywords
 from products_data import products_price, products_inventory, products_link
 
 
@@ -16,22 +16,10 @@ def getProductLink(product_name):
     return products_link[product_name]
 
 
-def getProductsIntent(intents):
-    filtered_dict = {k: v for (k, v) in intents.items() if 'sản phẩm' in k}
-    if(len(filtered_dict) == 0):
-        return None
-    else:
-        products_intent = list(filtered_dict.keys())
-        return products_intent
-
-
-def getCategoriesIntent(intents):
-    filtered_dict = {k: v for (k, v) in intents.items() if 'danh mục' in k}
-    if(len(filtered_dict) == 0):
-        return None
-    else:
-        categories_intent = list(filtered_dict.keys())
-        return categories_intent
+def createDict(key, value):
+    newDict = {}
+    newDict[key] = value
+    return newDict
 
 
 def prepareCategoriesIntentAnswer(categories_intent=[]):
@@ -41,153 +29,144 @@ def prepareCategoriesIntentAnswer(categories_intent=[]):
     return createDict("answer", answer)
 
 
-def prepareProductPriceAnswer(product_intent):
-    product_price = getProductPrice(product_intent)
-    product_link = getProductLink(product_intent)
-    return 'Giá của sản phẩm {} là {}.'.format(product_link, product_price)
+def filterIntentsWithHighestValue(matched_intents):
+    highest_intent_value = max(matched_intents.values())
+    filtered_dict = {k: v for (k, v) in matched_intents.items()
+                     if highest_intent_value == v}
+    return filtered_dict
 
 
-def prepareProductInventoryAnswer(product_intent):
-    product_inventory = getProductInventory(product_intent)
-    product_link = getProductLink(product_intent)
-    return 'Số tồn kho của sản phẩm {} là {}.'.format(product_link, product_inventory)
+def getAllHighestValueIntents(highest_value_intents):
+    main_intent = None
+    if(len(highest_value_intents) == 1):
+        main_intent = list(highest_value_intents.keys())[0]
+    else:
+        main_intent = list(highest_value_intents.keys())[-1]
+    return main_intent
 
 
-def createDict(key, value):
-    newDict = {}
-    newDict[key] = value
-    return newDict
+def getProductsFromMatchedIntents(intents):
+    filtered_dict = {k: v for (k, v) in intents.items() if 'sản phẩm' in k}
+    if(len(filtered_dict) == 0):
+        return None
+    else:
+        products_intent = list(filtered_dict.keys())
+        return products_intent
 
 
-def getAnswerDirection(intents):
-    # Sửa lại code lấy Intent cao nhất
+def getCategoriesFromMatchedIntent(intents):
+    filtered_dict = {k: v for (k, v) in intents.items() if 'danh mục' in k}
+    if(len(filtered_dict) == 0):
+        return None
+    else:
+        categories_intent = list(filtered_dict.keys())
+        return categories_intent
+
+
+def returnAltAnswerForUnavailableProductIntent(matched_intents, main_intent):
+    categories_intent = getCategoriesFromMatchedIntent(
+        matched_intents)
+    if len(categories_intent) > 0:
+        return prepareCategoriesIntentAnswer(categories_intent)
+    else:
+        return createDict("key", main_intent)
+
+
+def returnProductInventory(products_intent):
+    inventory_answer = ''
+    for product_intent in products_intent:
+        product_inventory = getProductInventory(product_intent)
+        product_link = getProductLink(product_intent)
+        intent_answer = 'Số tồn kho của sản phẩm {} là {}.'.format(
+            product_link, product_inventory)
+        inventory_answer += intent_answer + '\n'
+    return createDict("answer", inventory_answer)
+
+
+def returnProductPrice(products_intent):
+    price_answer = ''
+    for product_intent in products_intent:
+        product_price = getProductPrice(product_intent)
+        product_link = getProductLink(product_intent)
+        intent_answer = 'Giá của sản phẩm {} là {}.'.format(
+            product_link, product_price)
+        price_answer += intent_answer + '\n'
+    return createDict("answer", price_answer)
+
+
+def MultipleRegconizedIntent(matched_intents):
     try:
-        # Lấy ra tên ngữ cảnh có điểm số cao nhất
-        highest_intent = max(intents, key=intents.get)
-        # Lấy điểm số của ngữ cảnh đạt điểm cao nhất
-        highest_intent_value = intents[highest_intent]
-        # Lấy ra các ngữ cảnh có cùng điểm cao nhất
-        filtered_dict = {k: v for (k, v) in intents.items()
-                         if highest_intent_value == v}
+        highest_value_intents = filterIntentsWithHighestValue(matched_intents)
+        main_intent = getAllHighestValueIntents(
+            highest_value_intents)
+        splitted_main_intents = main_intent.split('.')
 
-        main_intent = None
-        # Nếu danh sách chỉ có một ngữ cảnh có điểm cao nhất lấy ngữ cảnh đó
-        if(len(filtered_dict) == 1):
-            main_intent = list(filtered_dict.keys())[0]
-        # Nếu danh sách có hơn 2 lấy ngữ cảnh theo sắp xếp thứ tự cuối cùng
-        else:
-            main_intent = list(filtered_dict.keys())[-1]
-
-        main_intents = main_intent.split('.')
-
-        match main_intents[0]:
-            case 'danh mục':
-                # Đưa link danh mục sản phẩm cho khách hàng
-                return createDict("key", main_intent)
-                # prepareCategoriesListAnswer()
-            case 'sản phẩm':
-                return createDict("key", main_intent)
+        match splitted_main_intents[0]:
             case 'câu hỏi':
-                products_intent = getProductsIntent(intents)
-                match main_intents[1]:
-                    case 'giá tiền':
-                        # Nếu không tồn tại tên sản phẩm trong câu hỏi
-                        if not products_intent:
-                            categories_intent = getCategoriesIntent(intents)
-                            if len(categories_intent) > 0:
-                                return prepareCategoriesIntentAnswer(categories_intent)
-                            else:
-                                return createDict("key", main_intent)
-                        # Ngược lại nếu tồn tại tên sản phẩm trong câu hỏi
-                        else:
-                            price_answer = ''
-                            for product_intent in products_intent:
-                                intent_answer = prepareProductPriceAnswer(
-                                    product_intent)
-                                price_answer += intent_answer + '\n'
-                            return createDict("answer", price_answer)
-                    case 'số tồn kho':
-                        if not products_intent:
-                            categories_intent = getCategoriesIntent(intents)
-                            if len(categories_intent) > 0:
-                                return prepareCategoriesIntentAnswer(categories_intent)
-                            else:
-                                return createDict("key", main_intent)
-                        else:
-                            inventory_answer = ''
-                            for product_intent in products_intent:
-                                intent_answer = prepareProductInventoryAnswer(
-                                    product_intent)
-                                inventory_answer += intent_answer + '\n'
-                            return createDict("answer", inventory_answer)
-
+                products_intent = getProductsFromMatchedIntents(
+                    matched_intents)
+                if not products_intent:
+                    return returnAltAnswerForUnavailableProductIntent(matched_intents, main_intent)
+                else:
+                    match splitted_main_intents[1]:
+                        case 'giá tiền':
+                            return returnProductPrice(products_intent)
+                        case 'số tồn kho':
+                            return returnProductInventory(products_intent)
             case default:
                 return createDict("key", main_intent)
 
     except:
         return createDict("key", "không rõ")
 
+# Hàm trả về chuỗi không rõ
 
-def createAnswer(message):
-    user_input = message.lower()
 
-    matched_intent = {}
+def noRecognizedIntent():
+    return 'không rõ'
 
-    for intent in keywords:
-        intent_arr = intent.split(".")
+
+def SingleRecognizedIntent(matched_intents):
+    return list(matched_intents.keys())[0]
+
+
+def getMatchedIntents(user_input):
+    matched_intents = dict()
+    for keyword_index in synonym_keywords:
+        intent_arr = keyword_index.split(".")
         weight = 1
         match intent_arr[0]:
             case 'câu hỏi':
                 weight = 3
             case 'default':
                 weight = 1
-        for pattern in keywords[intent]:
+        for pattern in synonym_keywords[keyword_index]:
             if(re.search(pattern, user_input)):
-                if intent not in matched_intent:
-                    matched_intent[intent] = weight
-                elif intent in matched_intent:
-                    matched_intent[intent] += weight
+                if keyword_index not in matched_intents:
+                    matched_intents[keyword_index] = weight
+                elif keyword_index in matched_intents:
+                    matched_intents[keyword_index] += weight
+    return matched_intents
 
+
+def createAnswer(message):
+    user_input = message.lower()
+
+    matched_intents = getMatchedIntents(user_input)
     key = ''
-    if len(matched_intent) == 0:
-        key = 'không rõ'
-    elif len(matched_intent) == 1:
-        key = list(matched_intent.keys())[0]
-    elif len(matched_intent) > 1:
-        intentSum = sum(matched_intent.values())
-        for intent in matched_intent:
-            matched_intent[intent] = matched_intent[intent] / intentSum
-        del intentSum
-        answer_direction = getAnswerDirection(matched_intent)
 
+    if len(matched_intents) == 0:
+        key = noRecognizedIntent()
+    elif len(matched_intents) == 1:
+        key = SingleRecognizedIntent(matched_intents)
+    elif len(matched_intents) > 1:
+        answer_direction = MultipleRegconizedIntent(matched_intents)
         match list(answer_direction.keys())[0]:
             case "answer":
                 return answer_direction["answer"]
             case "key":
                 key = answer_direction["key"]
-
     else:
         key = 'không rõ'
 
-    return responses[key]
-
-
-# if câu hỏi:
-# 	Check sản phẩm
-# 	If no sản phẩm
-# 		Check danh mục
-# 		if Danh mục
-# 			Hỏi sản phẩm danh mục muốn kiểm tra
-# 		Else
-# 			Yêu cầu khách hàng cung cấp thôn tin sản phẩm
-# 	Else
-# 		Đưa câu trả lời câu hỏi
-
-# elif danh mục:
-#   If danh mục[1] ==0
-#       Liệt kê các danh mục
-#   Else
-#       Đưa link danh mục[1]
-# elif sản phẩm:
-# 	Đưa link sản phẩm
-# elif:
+    return responses_keywords[key]

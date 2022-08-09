@@ -1,8 +1,9 @@
 from lib.mysql_conn import mysqldb, mysqlerror
+from unidecode import unidecode
 
 mysqlcursor = mysqldb.cursor()
 
-query = ''' SELECT ahr00_virtuemart_products.virtuemart_product_id, product_name, category_name, ahr00_virtuemart_products_en_gb.metadesc, ahr00_virtuemart_products_en_gb.slug, product_price, currency_symbol, product_in_stock, ahr00_virtuemart_categories_en_gb.slug
+query = ''' SELECT ahr00_virtuemart_products.virtuemart_product_id, product_name, category_name, ahr00_virtuemart_products_en_gb.metadesc, ahr00_virtuemart_products_en_gb.slug, product_price, currency_symbol, product_in_stock, ahr00_virtuemart_categories_en_gb.slug, ahr00_virtuemart_categories_en_gb.metadesc
             FROM ahr00_virtuemart_products
             INNER JOIN ahr00_virtuemart_products_en_gb
             ON ahr00_virtuemart_products.virtuemart_product_id = ahr00_virtuemart_products_en_gb.virtuemart_product_id
@@ -16,16 +17,17 @@ query = ''' SELECT ahr00_virtuemart_products.virtuemart_product_id, product_name
             ON ahr00_virtuemart_product_categories.virtuemart_category_id = ahr00_virtuemart_categories_en_gb.virtuemart_category_id
             WHERE ahr00_virtuemart_products.created_on IS NOT NULL
             '''
+
 # value = (conversation_id, formatted_time)
 mysqlcursor.execute(query)
 data = mysqlcursor.fetchall()
 
 files = ['./language-data/intents/intents-products.txt',
          './language-data/intents/intents-categories.txt',
-         './language-data/intents/intents-categories.txt',
          './language-data/responses/responses-categories.txt',
          './language-data/responses/responses-products.txt',
          './language-data/synonyms/synonyms-products.txt',
+         './language-data/synonyms/synonyms-categories.txt',
          './products-data/products_price.txt',
          './products-data/products_inventory.txt',
          './products-data/products_link.txt']
@@ -41,6 +43,7 @@ products_inventory = dict()
 products_link = dict()
 responses_products = dict()
 synonyms_products = dict()
+synonyms_categories = dict()
 
 # mysqldb.commit()
 for row in data:
@@ -60,16 +63,35 @@ for row in data:
     metadescs = row[3].split(' ')
     descs = set()
     for metadesc in metadescs:
+        if metadesc == '' or metadesc == ' ':
+            continue
         metadesc = metadesc.replace('-', ' ')
         descs.add(metadesc)
+
+        unicoded = unidecode(metadesc)
+        if unicoded not in descs:
+            descs.add(unicoded)
     synonyms_products[row[1].lower()] = descs
 
-    # Get list of categories and categories_slug
+    # Get list of categories, categories_metadesc and categories_slug
     if row[2] not in categories:
         categories.append(row[2])
 
     if row[8] not in categories_slugs:
         categories_slugs.append(row[8])
+
+    categories_metadescs = row[9].split(' ')
+    descs = set()
+    for metadesc in categories_metadescs:
+        if metadesc == '' or metadesc == ' ':
+            continue
+        metadesc = metadesc.replace('-', ' ')
+        descs.add(metadesc)
+
+        unicoded = unidecode(metadesc)
+        if unicoded not in descs:
+            descs.add(unicoded)
+    synonyms_categories[row[2].lower()] = descs
 
     # Get list of products and its price
     products_price[intent_name.replace(
@@ -118,9 +140,17 @@ f.write(str(responses_products))
 f.close()
 
 # Create synonyms-products.txt
-synonyms_data = {}
+synonyms_data = dict()
 synonyms_data['sản phẩm'] = synonyms_products
 f = open('./language-data/synonyms/synonyms-products.txt',
+         "a", encoding="utf-8")
+f.write(str(synonyms_data))
+f.close()
+
+# Create synonyms-categories.txt
+synonyms_data = dict()
+synonyms_data['danh mục'] = synonyms_categories
+f = open('./language-data/synonyms/synonyms-categories.txt',
          "a", encoding="utf-8")
 f.write(str(synonyms_data))
 f.close()
