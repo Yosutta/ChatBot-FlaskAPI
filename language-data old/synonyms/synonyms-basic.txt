@@ -1,0 +1,84 @@
+{
+    'lời chào': {
+        'xin chào',
+        'xin chao',
+        'hello',
+        'hi',
+        'konichiwa',
+        'konbanwa',
+    },
+    'hỏi thăm':{
+        'khoẻ không',
+        'khoe khong',
+        'how are you',
+        'how do you do'
+    },
+    'từ biệt': {
+        'chào tạm biệt',
+        'tạm biệt',
+        'hẹn gặp lại',
+        'chao tam biet',
+        'tam biet',
+        'hen gap lai',
+        'bye',
+        'goodbye',
+    },
+    'thời gian làm việc':{
+        'thời gian làm việc',
+        'giờ làm việc',
+        'thoi gian lam viec',
+        'gio lam viec'
+    },
+    'phân loại danh mục':{
+        'danh mục',
+        'phân loại',
+        'thể loại',
+        'danh muc',
+        'phan loai',
+        'the loai',
+        'categories',
+        'catgory',
+        'topic',
+        'topics'
+    },
+    'câu hỏi':{
+        'giá tiền':{
+            'giá',
+            'tiền',
+            'giá tiền',
+            'bao nhiều tiền',
+            'giá nhiêu',
+            'nhiêu tiền',
+            'gia',
+            'tien',
+            'gia tien',
+            'bao nhieu tien',
+            'gia nhieu',
+            'nhieu tien',
+            'price',
+            'cost',
+            'how much'
+        },
+        'số tồn kho':{
+            'kho',
+            'tồn kho',
+            'số tồn kho',
+            'hàng',
+            'còn hàng không',
+            'còn không',
+            'còn bao nhiêu hàng',
+            'còn nhiều hàng không',
+            'có hàng không',
+            'ton kho',
+            'so ton kho',
+            'hang',
+            'con hang khong',
+            'con khong',
+            'con bao nhieu hang',
+            'con nhieu hang khong',
+            'co hang khong',
+            'stock',
+            'inventory'
+        }
+    }
+}

@@ -22,6 +22,9 @@ query = ''' SELECT ahr00_virtuemart_products.virtuemart_product_id, product_name
 mysqlcursor.execute(query)
 data = mysqlcursor.fetchall()
 
+for row in data:
+    print(row)
+
 files = ['./language-data/intents/intents-products.txt',
          './language-data/intents/intents-categories.txt',
          './language-data/responses/responses-categories.txt',
