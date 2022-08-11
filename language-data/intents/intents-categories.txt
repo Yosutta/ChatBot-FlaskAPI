@@ -2,3 +2,5 @@ danh mục.sauvage
 danh mục.dior homme
 danh mục.fahrenheit
 danh mục.higher
+danh mục.miss dior
+danh mục.poison
