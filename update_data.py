@@ -58,7 +58,9 @@ for row in data:
     f.close()
 
     # Get list of products responses
-    product_ans = 'Đây là đường dẫn đến sản phầm \n <a href="http://thinh01165.xyz/index.php/product/{}/{}-detail">{}</a> '.format(
+    # product_ans = 'Đây là đường dẫn đến sản phầm \n <a href="http://thinh01165.xyz/index.php/product/{}/{}-detail">{}</a> '.format(
+    #     row[8], row[4], row[1])
+    product_ans = 'This is the link to the product \n <a href="http://thinh01165.xyz/index.php/product/{}/{}-detail">{}</a> '.format(
         row[8], row[4], row[1])
     responses_products[intent_name.replace('\n', '')] = product_ans
 
@@ -112,7 +114,8 @@ for row in data:
 
 # Create intents/categories.txt
 responses_categories = dict()
-categories_link = 'Đây danh sách các danh mục sản phẩm của chúng tôi \n'
+# categories_link = 'Đây danh sách các danh mục sản phẩm của chúng tôi \n'
+categories_link = 'These are our products: \n'
 for index in range(len(categories)):
     f = open('./language-data/intents/intents-categories.txt',
              "a", encoding="utf-8")
@@ -122,7 +125,9 @@ for index in range(len(categories)):
     # Get responses categories data
     category_link = '<a href="http://thinh01165.xyz/index.php/product/{}">{}</a>'.format(
         categories_slugs[index], categories[index])
-    category_ans = 'Đây là đường dẫn đến danh mục các sản phầm liên quan về \n {}'.format(
+    # category_ans = 'Đây là đường dẫn đến danh mục các sản phầm liên quan về \n {}'.format(
+    #     category_link)
+    category_ans = 'These are the links to the products that are related to \n {}'.format(
         category_link)
     responses_categories[category_name.replace('\n', '')] = category_ans
 

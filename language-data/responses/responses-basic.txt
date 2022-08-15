@@ -1,9 +1,9 @@
 {
-    "lời chào": "Xin chào! Tôi có thể giúp được gì cho bạn nào?",
-    "hỏi thăm": "Cảm ơn sự quan tâm của bạn, tôi khoẻ!",
-    "từ biệt": "Tạm biệt và hẹn gặp lại nhé!",
-    "câu hỏi.giá tiền": "Bạn cần được tư vấn giá tiền của món nào vậy? Để có thể phục vụ bạn tốt hơn thì bạn có thể cung cấp thêm thông tin được không?",
-    "câu hỏi.số tồn kho": "Bạn cần được biết về số tồn kho của món nào vậy? Để có thể phục vụ bạn tốt hơn thì bạn có thể cung cấp thêm thông tin được không?",
-    "thời gian làm việc": "Thời gian làm việc hành chính của chúng tôi là từ 8h sáng cho đến 5h chiều. Nhưng tôi thì vẫn sẵn sàng ở đây để giúp đỡ giải đáp thắc mắc của bạn.",
-    "không rõ" : "Xin lỗi tôi không hiểu ý bạn lắm. Bạn có thể nói lại một lần nữa được không?"
+    "lời chào": "Greetings! How can we help you?",
+    "hỏi thăm": "Thank you for your concern, I'm fine.",
+    "từ biệt": "Good bye and see you next time!",
+    "câu hỏi.giá tiền": "Which product do you need to know the price of? To be able to to serve you better, could you please provide more information?",
+    "câu hỏi.số tồn kho": "Which product do you need to know the inventory of? To be able to to serve you better, could you please provide more information?",
+    "thời gian làm việc": "Our work hours are from 9h in the morning until 17h in the afternoon. But I'm always here be ready to provide answers to your wonders.",
+    "không rõ" : "Sorry we can not quite understand. Could you please say it again?"
 }
