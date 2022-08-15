@@ -27,7 +27,9 @@
         'thời gian làm việc',
         'giờ làm việc',
         'thoi gian lam viec',
-        'gio lam viec'
+        'gio lam viec',
+        'work time',
+        'work hour'
     },
     'phân loại danh mục':{
         'danh mục',

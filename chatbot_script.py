@@ -24,7 +24,7 @@ def createDict(key, value):
 
 def prepareCategoriesIntentAnswer(categories_intent=[]):
     category = categories_intent[0].split('.')[1].capitalize()
-    answer = 'Bạn hãy cung cấp thêm thông tin về tên sản phẩm trong danh mục {} nhé!'.format(
+    answer = 'Please provide information of the product in the {} category!'.format(
         category)
     return createDict("answer", answer)
 
@@ -77,7 +77,7 @@ def returnProductInventory(products_intent):
     for product_intent in products_intent:
         product_inventory = getProductInventory(product_intent)
         product_link = getProductLink(product_intent)
-        intent_answer = 'Số tồn kho của sản phẩm {} là {}.'.format(
+        intent_answer = '{}"s inventory number is {}.'.format(
             product_link, product_inventory)
         inventory_answer += intent_answer + '\n'
     return createDict("answer", inventory_answer)
@@ -88,7 +88,7 @@ def returnProductPrice(products_intent):
     for product_intent in products_intent:
         product_price = getProductPrice(product_intent)
         product_link = getProductLink(product_intent)
-        intent_answer = 'Giá của sản phẩm {} là {}.'.format(
+        intent_answer = '{} price is {}.'.format(
             product_link, product_price)
         price_answer += intent_answer + '\n'
     return createDict("answer", price_answer)
